@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ namespace SimpleHttpTest
                     Console.WriteLine("Press 1 to test TLS 1.1 ");
                     Console.WriteLine("Press 2 to test TLS 1.2 ");
                     Console.WriteLine("Press 3 to test external site");
+                    Console.WriteLine("Press 4 view TLS Cyphers");
                     const string tlsSite0 = "https://tls-v1-0.badssl.com:1010/";
                     const string tlsSite1 = "https://tls-v1-1.badssl.com:1011/";
                     const string tlsSite2 = "https://tls-v1-0.badssl.com:1010/";
@@ -47,10 +49,19 @@ namespace SimpleHttpTest
                     {
                         response = await client.GetAsync(tlsSite2);
                     }
-                    else
+                    else if (key == 3)
                     {
                         var siteUrl = Console.ReadLine();
                         response = await client.GetAsync(siteUrl);
+                    }
+                    else if (key == 4)
+                    {
+                       printCypers();
+                       continue;
+                    } else
+                    {
+                        Console.WriteLine("Option not available.");
+                        continue;
                     }
 
                     //response.EnsureSuccessStatusCode();
@@ -70,6 +81,11 @@ namespace SimpleHttpTest
                     Console.WriteLine();
                 }
             }
+        }
+
+        public static void printCypers()
+        {
+            throw new NotImplementedException();
         }
     }
 }
